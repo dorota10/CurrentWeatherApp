@@ -27,7 +27,6 @@ public class CloudGen : MonoBehaviour
         startPos = transform.position;
         if (generateClouds)
         {
-            Prewarm();
             StartGeneratingClouds();
         }
     }
@@ -62,6 +61,7 @@ public class CloudGen : MonoBehaviour
         generateClouds = true;
         if (cloudGenerationCoroutine == null) // Uruchom tylko jeœli coroutine nie zosta³a jeszcze uruchomiona
         {
+            Prewarm();
             cloudGenerationCoroutine = StartCoroutine(GenerateCloudsCoroutine());
         }
     }
@@ -80,7 +80,6 @@ public class CloudGen : MonoBehaviour
         for (int i = 0; i < 6; i++)
         {
             Vector3 spawnPos = startPos + Vector3.right * (i * 2); //poszerzanie odstêpu
-            print(spawnPos);
             SpawnCloud(spawnPos, speed);
         }
     }
