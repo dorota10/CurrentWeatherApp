@@ -7,9 +7,6 @@ public class CloudGen : MonoBehaviour
     [SerializeField]
     public GameObject[] clouds;
 
-    //[SerializeField]
-    //private float spawnInterval = 4f;
-
     [SerializeField]
     public GameObject endPoint;
 
