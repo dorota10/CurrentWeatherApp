@@ -7,8 +7,8 @@ public class CloudGen : MonoBehaviour
     [SerializeField]
     public GameObject[] clouds;
 
-    [SerializeField]
-    private float spawnInterval = 4f;
+    //[SerializeField]
+    //private float spawnInterval = 4f;
 
     [SerializeField]
     public GameObject endPoint;
@@ -52,14 +52,18 @@ public class CloudGen : MonoBehaviour
         generateClouds = false;
         if (cloudGenerationCoroutine != null)
         {
-            StopCoroutine(cloudGenerationCoroutine); // Zatrzymaj Coroutine przy zatrzymaniu generowania chmur
+            StopCoroutine(cloudGenerationCoroutine);
+            cloudGenerationCoroutine = null; // Ustaw referencjê coroutine na null po zatrzymaniu
         }
     }
 
     public void StartGeneratingClouds()
     {
         generateClouds = true;
-        cloudGenerationCoroutine = StartCoroutine(GenerateCloudsCoroutine()); // Przypisz referencjê do Coroutine
+        if (cloudGenerationCoroutine == null) // Uruchom tylko jeœli coroutine nie zosta³a jeszcze uruchomiona
+        {
+            cloudGenerationCoroutine = StartCoroutine(GenerateCloudsCoroutine());
+        }
     }
 
     IEnumerator GenerateCloudsCoroutine()
@@ -67,15 +71,16 @@ public class CloudGen : MonoBehaviour
         while (generateClouds)
         {
             SpawnCloud(startPos, speed);
-            yield return new WaitForSeconds(2);
+            yield return new WaitForSeconds(1);
         }
     }
 
     void Prewarm()
     {
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 6; i++)
         {
-            Vector3 spawnPos = startPos + Vector3.right * (i * 2);
+            Vector3 spawnPos = startPos + Vector3.right * (i * 2); //poszerzanie odstêpu
+            print(spawnPos);
             SpawnCloud(spawnPos, speed);
         }
     }

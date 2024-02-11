@@ -169,7 +169,7 @@ public class ShowWeather : MonoBehaviour
         System.DateTime sunsetTimeOrg = sunsetTimeUTC.AddHours(h);
 
         //print(night.enabled.ToString());
-        bool isNight = (newTime > sunsetTimeOrg || newTime < sunriseTimeOrg);
+        isNight = (newTime > sunsetTimeOrg || newTime < sunriseTimeOrg);
         if (isNight)
         {
             night.enabled = true;
