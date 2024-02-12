@@ -11,8 +11,10 @@ public class ShowWeather : MonoBehaviour
     public string currentWeather;
     private bool cloudy;
     private bool sunny;
+    private bool foggy;
     public GameObject cloudyObject;
     public GameObject sunnyObject;
+    public GameObject foggyObject;
     private Vector3 startPoint = new Vector3(0f, 3.5f, 0f); // Punkt docelowy przy aktywacji
     private Vector3 endPoint = new Vector3(2.5f, 6.5f, 0f); // Punkt docelowy przy dezaktywacji
     public float arcHeight = 0.1f;
@@ -39,11 +41,15 @@ public class ShowWeather : MonoBehaviour
         {
             SpawnSunny();
         }
+        else if (currentWeather == "Fog")
+        {
+            SpawnFoggy();
+        }
         else
         {
             None();
         }
-        StartCoroutine(DayNight(weatherData)); //w³aczanie nocy
+        StartCoroutine(DayNight(weatherData));
     }
 
     public void DisplayDemo(string currentWeather)
@@ -55,6 +61,10 @@ public class ShowWeather : MonoBehaviour
         else if (currentWeather == "Clear")
         {
             SpawnSunny();
+        }
+        else if (currentWeather == "Fog")
+        {
+            SpawnFoggy();
         }
         else
         {
@@ -78,6 +88,10 @@ public class ShowWeather : MonoBehaviour
         {
             StartCoroutine(DisableCloudy());
         }
+        else if (foggy)
+        {
+            StartCoroutine(DisableFoggy());
+        }
     }
 
 
@@ -92,6 +106,17 @@ public class ShowWeather : MonoBehaviour
         }
     }
 
+
+    public void SpawnFoggy()
+    {
+        foggy = true;
+        foggyObject.SetActive(true);
+        FindObjectOfType<FogGen>().StartGeneratingFog();
+        if (sunny)
+        {
+            StartCoroutine(DisableSunny());
+        }
+    }
     void None()
     {
         if (cloudy)
@@ -101,6 +126,10 @@ public class ShowWeather : MonoBehaviour
         else if (sunny)
         {
             StartCoroutine(DisableSunny());
+        }
+        else if (foggy)
+        {
+            StartCoroutine(DisableFoggy());
         }
 
     }
@@ -123,9 +152,24 @@ public class ShowWeather : MonoBehaviour
  
     }
 
+    IEnumerator DisableFoggy()
+    {
+        foggy = false;
+        FindObjectOfType<FogGen>().StopGeneratingFog(); //Najpierw trzeba zatrzymaæ generowanie chmur
+        GameObject fogcloudsParent = GameObject.Find("Fog");
 
+        if (fogcloudsParent != null)
+        {
+            foreach (Transform fog in fogcloudsParent.transform)
+            {
+                Destroy(fog.gameObject);
+            }
+        }
+        foggyObject.SetActive(false); //Potem dopiero mo¿na je odaktywniæ
+        yield return new WaitForSeconds(0);
+    }
 
-    IEnumerator MoveObjectAlongArcCoroutine(Vector3 start, Vector3 end)
+        IEnumerator MoveObjectAlongArcCoroutine(Vector3 start, Vector3 end)
     {
         float elapsedTime = 0f;
         while (elapsedTime < duration)
@@ -150,6 +194,9 @@ public class ShowWeather : MonoBehaviour
         sunnyObject.SetActive(false);
     }
 
+  
+
+    
     IEnumerator DayNight(WeatherData weatherData)
     {
         WeatherInfo weatherInfo = FindObjectOfType<WeatherInfo>();
