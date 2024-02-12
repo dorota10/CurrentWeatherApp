@@ -82,11 +82,14 @@ public class SnowGen : MonoBehaviour
         // Ustal szerokoœæ ekranu
         float screenWidth = Screen.width;
 
-        // Ustal odstêp miêdzy œnie¿ynkami
-        float snowflakeSpacing = screenWidth / 6f; // Dzieli ekran na 6 równych czêœci
+        // Oblicz szerokoœæ pojedynczej œnie¿ki
+        float snowflakeWidth = snowflakes[0].GetComponent<Renderer>().bounds.size.x; // Za³ó¿my, ¿e wszystkie œnie¿ki maj¹ tak¹ sam¹ szerokoœæ
+
+        // Oblicz odstêp miêdzy œnie¿kami
+        float snowflakeSpacing = snowflakeWidth;
 
         // Iteruj przez ka¿dy punkt pocz¹tkowy
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < Mathf.FloorToInt(screenWidth / snowflakeSpacing); i++)
         {
             // Oblicz pozycjê pocz¹tkow¹ œnie¿ynki na ca³ej szerokoœci ekranu
             Vector3 spawnPos = new Vector3(i * snowflakeSpacing, startPos.y, startPos.z);
@@ -96,3 +99,8 @@ public class SnowGen : MonoBehaviour
         }
     }
 }
+    
+
+
+ 
+    
