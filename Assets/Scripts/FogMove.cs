@@ -25,6 +25,4 @@ public class FogMove : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
 }
-   
