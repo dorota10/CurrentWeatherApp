@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SnowGen : MonoBehaviour
@@ -8,16 +7,16 @@ public class SnowGen : MonoBehaviour
     public GameObject[] snowflakes;
 
     [SerializeField]
-    public GameObject endPoint1; // Punkt koñcowy na ziemi
+    public GameObject endPoint1;
 
     Vector3 startPos;
 
     private bool generateSnowflake = false;
-    private float speed = 2;
 
     public Transform snowflakeParent;
 
     private Coroutine snowflakeGenerationCoroutine;
+
 
     void Start()
     {
@@ -28,13 +27,15 @@ public class SnowGen : MonoBehaviour
         }
     }
 
-    void SpawnSnowflake(Vector3 spawnPos, float speed)
+    void SpawnSnowflake(Vector3 spawnPos)
     {
         int randomIndex = UnityEngine.Random.Range(0, snowflakes.Length);
         GameObject snow = Instantiate(snowflakes[randomIndex], spawnPos, Quaternion.identity, snowflakeParent);
 
         float scale = UnityEngine.Random.Range(0.8f, 1.2f);
         snow.transform.localScale = new Vector2(scale, scale);
+
+        float speed = UnityEngine.Random.Range(1f, 2.5f);
 
         SnowMove snowMoveComponent = snow.GetComponent<SnowMove>();
         if (snowMoveComponent != null)
@@ -72,35 +73,25 @@ public class SnowGen : MonoBehaviour
     {
         while (generateSnowflake)
         {
-            SpawnSnowflake(startPos, speed);
-            yield return new WaitForSeconds(1);
+            float randomX = UnityEngine.Random.Range(startPos.x+1f, startPos.x+14f);
+
+            Vector3 spawnPos = new Vector3(randomX, startPos.y, startPos.z);
+
+            SpawnSnowflake(spawnPos);
+            yield return new WaitForSeconds(0.05f);
         }
     }
 
     void Prewarm()
     {
-        // Ustal szerokoœæ ekranu
-        float screenWidth = Screen.width;
+        //Tu coœ nie chce dzia³aæ ten podgl¹d
+        float odstep = 0.5f; //poszerzanie odstêpu
 
-        // Oblicz szerokoœæ pojedynczej œnie¿ki
-        float snowflakeWidth = snowflakes[0].GetComponent<Renderer>().bounds.size.x; // Za³ó¿my, ¿e wszystkie œnie¿ki maj¹ tak¹ sam¹ szerokoœæ
-
-        // Oblicz odstêp miêdzy œnie¿kami
-        float snowflakeSpacing = snowflakeWidth;
-
-        // Iteruj przez ka¿dy punkt pocz¹tkowy
-        for (int i = 0; i < Mathf.FloorToInt(screenWidth / snowflakeSpacing); i++)
+        for (int i = 0; i < 30; i++)
         {
-            // Oblicz pozycjê pocz¹tkow¹ œnie¿ynki na ca³ej szerokoœci ekranu
-            Vector3 spawnPos = new Vector3(i * snowflakeSpacing, startPos.y, startPos.z);
-
-            // U¿yj wyliczonej pozycji pocz¹tkowej do generowania œnie¿ynki
-            SpawnSnowflake(spawnPos, speed);
+            float randomX = UnityEngine.Random.Range(startPos.x + 1f, startPos.x + 14f);
+            Vector3 spawnPos = new Vector3(randomX, startPos.y-i*odstep, startPos.z); ; 
+            SpawnSnowflake(spawnPos);
         }
     }
 }
-    
-
-
- 
-    

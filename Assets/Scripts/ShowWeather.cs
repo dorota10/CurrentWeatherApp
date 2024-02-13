@@ -27,6 +27,13 @@ public class ShowWeather : MonoBehaviour
     public GameObject noc_niebo_Object;
     public GameObject dzien_niebo_Object;
     public GameObject snow_grass_Object;
+    public GameObject tree_Object;
+    public GameObject krzaczek_Object;
+    public GameObject snow_tree_Object;
+    public GameObject snow_krzaczek_Object;
+    public GameObject chmurki_Object;
+
+
 
     void Awake()
     {
@@ -36,14 +43,13 @@ public class ShowWeather : MonoBehaviour
     public void DisplayWeather(WeatherData weatherData)
     {
         currentWeather = weatherData.weather[0].main;
-        if (currentWeather == "Clouds" || currentWeather == "Drizzle" || currentWeather == "Rain") //|| currentWeather == "Snow"
+        if (currentWeather == "Clouds") //|| currentWeather == "Snow"
         {
             SpawnCloudy();
         }
         else if (currentWeather == "Clear")
         {
             SpawnSunny();
-            snow_grass_Object.SetActive(false);
         }
         else if (currentWeather == "Fog")
         {
@@ -53,7 +59,6 @@ public class ShowWeather : MonoBehaviour
         else if (currentWeather == "Snow")
         {
             SpawnSnowy();
-            snow_grass_Object.SetActive(true);
 
         }
         else
@@ -65,14 +70,13 @@ public class ShowWeather : MonoBehaviour
 
     public void DisplayDemo(string currentWeather)
     {
-        if (currentWeather == "Clouds" || currentWeather == "Drizzle" || currentWeather == "Rain" )//|| currentWeather == "Snow"
+        if (currentWeather == "Clouds")//|| currentWeather == "Snow"
         {
             SpawnCloudy();
         }
         else if (currentWeather == "Clear")
         {
             SpawnSunny();
-            snow_grass_Object.SetActive(false);
         }
         else if (currentWeather == "Fog")
         {
@@ -81,7 +85,6 @@ public class ShowWeather : MonoBehaviour
         else if (currentWeather == "Snow")
         {
             SpawnSnowy();
-            snow_grass_Object.SetActive(true);
 
         }
         else
@@ -134,6 +137,10 @@ public class ShowWeather : MonoBehaviour
         {
             StartCoroutine(DisableSnowy());
         }
+        else if (foggy) // wy³¹czam mg³ê
+        {
+            StartCoroutine(DisableFoggy());
+        }
     }
 
 
@@ -146,15 +153,33 @@ public class ShowWeather : MonoBehaviour
         {
             StartCoroutine(DisableSunny());
         }
+        if (cloudy) //wy³¹czam chmury
+        {
+            StartCoroutine(DisableCloudy());
+        }
     }
     void SpawnSnowy()
     {
         snowy = true;
+        snow_grass_Object.SetActive(true);
+        krzaczek_Object.SetActive(false);
+        tree_Object.SetActive(false);
+        snow_krzaczek_Object.SetActive(true);
+        snow_tree_Object.SetActive(true);
         snowyObject.SetActive(true);
+        chmurki_Object.SetActive(true);
         FindObjectOfType<SnowGen>().StartGeneratingSnowflakes();
         if (sunny)
         {
             StartCoroutine(DisableSunny());
+        }
+        else if (foggy) //wy³¹czam mg³ê
+        {
+            StartCoroutine(DisableFoggy());
+        }
+        else if (cloudy)
+        {
+            StartCoroutine(DisableCloudy());
         }
     }
     void None()
@@ -198,8 +223,8 @@ public class ShowWeather : MonoBehaviour
     IEnumerator DisableFoggy()
     {
         foggy = false;
-        FindObjectOfType<FogGen>().StopGeneratingFog(); //Najpierw trzeba zatrzymaæ generowanie chmur
-        GameObject fogcloudsParent = GameObject.Find("Fog");
+        FindObjectOfType<FogGen>().StopGeneratingFog();
+        GameObject fogcloudsParent = GameObject.Find("FogClouds"); //Tu by³a z³a nazwa Fog zamiast FogClouds, dlatego nie chwyta³o :)
 
         if (fogcloudsParent != null)
         {
@@ -215,8 +240,14 @@ public class ShowWeather : MonoBehaviour
     IEnumerator DisableSnowy()
     {
         snowy = false;
+        snow_krzaczek_Object.SetActive(false);
+        snow_tree_Object.SetActive(false);
+        krzaczek_Object.SetActive(true);
+        tree_Object.SetActive(true);
+        chmurki_Object.SetActive(false);
+        snow_grass_Object.SetActive(false); //usuniêcie snowgrass za ka¿dym razem gdy usuwamy œnieg
         FindObjectOfType<SnowGen>().StopGeneratingSnowflakes(); //Najpierw trzeba zatrzymaæ generowanie chmur
-        GameObject snowflakesParent = GameObject.Find("Snow");
+        GameObject snowflakesParent = GameObject.Find("Snowflakes");
 
         if (snowflakesParent != null)
         {

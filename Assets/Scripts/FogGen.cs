@@ -37,7 +37,7 @@ public class FogGen : MonoBehaviour
         int randomIndex = UnityEngine.Random.Range(0, fogclouds.Length);
         GameObject fog = Instantiate(fogclouds[randomIndex], fogParent.position, Quaternion.identity, fogParent);
 
-        float startY = UnityEngine.Random.Range(spawnPos.y - 0.5f, spawnPos.y + 1.5f);
+        float startY = UnityEngine.Random.Range(spawnPos.y-0.2f, spawnPos.y + 1.5f); //Zawê¿y³am zakres
 
         fog.transform.position = new Vector3(spawnPos.x, startY, spawnPos.z);
 
@@ -79,7 +79,7 @@ public class FogGen : MonoBehaviour
     {
         for (int i = 0; i < 6; i++)
         {
-            Vector3 spawnPos = startPos + Vector3.right * (i * 1); //poszerzanie odstêpu
+            Vector3 spawnPos = startPos + Vector3.right * (i * 2); //poszerzanie odstêpu
             SpawnFogClouds(spawnPos, speed);
         }
     }
