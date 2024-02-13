@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6068637677943167027}
   - component: {fileID: 4980137477584718015}
+  - component: {fileID: -8133298480834273924}
   m_Layer: 0
   m_Name: Raindrop1
   m_TagString: Untagged
@@ -70,8 +71,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -513849323
-  m_SortingLayer: 1
+  m_SortingLayerID: -1401177821
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 4435f97211664b14a8e491f0d46cdfa0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -84,3 +85,15 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &-8133298480834273924
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6237707106699862302}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f73b5f3896c73341ac6d5c53529dd69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -7,7 +7,7 @@ using static WeatherInfo;
 public class RainMove : MonoBehaviour
 {
     private float endPosY;
-    private float speed = 6;
+    private float speed = 8;
 
     public void StartFloating(float newspeed, float newendPosY)
     {
@@ -24,5 +24,7 @@ public class RainMove : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        Sounds.RainSounds();//dzwiek deszczu
     }
 }

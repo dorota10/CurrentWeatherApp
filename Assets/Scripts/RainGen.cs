@@ -36,7 +36,7 @@ public class RainGen : MonoBehaviour
         float scale = UnityEngine.Random.Range(0.8f, 1.2f);
         rain.transform.localScale = new Vector2(scale, scale);
 
-        float speed = UnityEngine.Random.Range(1f, 2.5f);
+        float speed = UnityEngine.Random.Range(3f, 5f);
 
         RainMove rainMoveComponent = rain.GetComponent<RainMove>();
         if (rainMoveComponent != null)
@@ -77,6 +77,11 @@ public class RainGen : MonoBehaviour
             float randomX = UnityEngine.Random.Range(startPos.x + 1f, startPos.x + 14f);
 
             Vector3 spawnPos = new Vector3(randomX, startPos.y, startPos.z);
+            // Generowanie wiêkszej liczby kropli deszczu w ka¿dej iteracji
+            for (int i = 0; i < 3; i++)
+            {
+                SpawnRaindrop(spawnPos);
+            }
 
             SpawnRaindrop(spawnPos);
             yield return new WaitForSeconds(0.05f);

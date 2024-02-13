@@ -34,6 +34,11 @@ public class ShowWeather : MonoBehaviour
     public GameObject snow_tree_Object;
     public GameObject snow_krzaczek_Object;
     public GameObject chmurki_Object;
+    public GameObject kaluza_Object;
+    public GameObject rainclouds_Object;
+    public GameObject szareniebo_Object;
+    public GameObject szaratrawa_Object;
+
 
 
 
@@ -199,11 +204,21 @@ public class ShowWeather : MonoBehaviour
         {
             StartCoroutine(DisableCloudy());
         }
+        else if (rainy)
+        {
+            StartCoroutine(DisableRainy());
+        }
     }
     void SpawnRainy()
     {
         rainy = true;
-        
+        kaluza_Object.SetActive(true);
+        rainclouds_Object.SetActive(true);
+        szareniebo_Object.SetActive(true);
+        szaratrawa_Object.SetActive(true);
+
+       
+
         FindObjectOfType<RainGen>().StartGeneratingRaindrops();
         if (sunny)
         {
@@ -307,7 +322,12 @@ public class ShowWeather : MonoBehaviour
     IEnumerator DisableRainy()
     {
         rainy = false;
-        
+        kaluza_Object.SetActive(false);
+        rainclouds_Object.SetActive(false);
+        szareniebo_Object.SetActive(false);
+        szaratrawa_Object.SetActive(false);
+
+
         FindObjectOfType<RainGen>().StopGeneratingRaindrops(); //Najpierw trzeba zatrzymaæ generowanie chmur
         GameObject raindropsParent = GameObject.Find("RainDrops");
 
