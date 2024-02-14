@@ -8,32 +8,31 @@ public class ShowWeather : MonoBehaviour
 {
     //public SunRotate SunRotate_script;
     public static ShowWeather Instance;
-    public string currentWeather;
+    private string currentWeather;
+    private float temp;
     private bool cloudy;
     private bool sunny;
     private bool foggy;
     private bool snowy;
+    private bool rainy;
+    private bool isNight;
     public GameObject cloudyObject;
     public GameObject sunnyObject;
     public GameObject foggyObject;
     public GameObject snowyObject;
-    private Vector3 startPoint = new Vector3(0f, 3.5f, 0f); // Punkt docelowy przy aktywacji
-    private Vector3 endPoint = new Vector3(2.5f, 6.5f, 0f); // Punkt docelowy przy dezaktywacji
-    public float arcHeight = 0.1f;
-    public float duration = 2f;
-    public UnityEngine.Rendering.Universal.Light2D night;
+    public GameObject rainyObject;
+    private Vector3 startPoint = new Vector3(0f, 3.5f, 0f); // Punkt docelowy przy aktywacji s³oñca
+    private Vector3 endPoint = new Vector3(2.5f, 6.5f, 0f); // Punkt docelowy przy dezaktywacji s³oñca
+    private float arcHeight = 0.1f;
+    private float duration = 2f;
+    public UnityEngine.Rendering.Universal.Light2D lightness;
     private System.DateTime currentTime;
-    private bool isNight;
     public GameObject noc_niebo_Object;
     public GameObject dzien_niebo_Object;
-    public GameObject snow_grass_Object;
-    public GameObject tree_Object;
-    public GameObject krzaczek_Object;
-    public GameObject snow_tree_Object;
-    public GameObject snow_krzaczek_Object;
-    public GameObject chmurki_Object;
-
-
+    public GameObject ObiektyDeszcz;
+    public GameObject ObiektySniegowe;
+    public GameObject ObiektyZielone;
+    public GameObject SnowClouds_Object;
 
     void Awake()
     {
@@ -43,11 +42,13 @@ public class ShowWeather : MonoBehaviour
     public void DisplayWeather(WeatherData weatherData)
     {
         currentWeather = weatherData.weather[0].main;
-        if (currentWeather == "Clouds") //|| currentWeather == "Snow"
+        StartCoroutine(DayNight(weatherData));
+
+        if (currentWeather == "Clouds")
         {
             SpawnCloudy();
         }
-        else if (currentWeather == "Clear")
+        else if (currentWeather == "Clear" && isNight==false)
         {
             SpawnSunny();
         }
@@ -61,20 +62,39 @@ public class ShowWeather : MonoBehaviour
             SpawnSnowy();
 
         }
+        else if (currentWeather == "Rain")
+        {
+            SpawnRainy();
+        }
         else
         {
             None();
         }
-        StartCoroutine(DayNight(weatherData)); //w³aczanie nocy
+
+        temp=weatherData.main.temp;
+
+        if (temp < 273.15)
+        {
+            ObiektySniegowe.SetActive(true);
+            ObiektyZielone.SetActive(false);
+        }
+        else
+        {
+            ObiektySniegowe.SetActive(false);
+            ObiektyZielone.SetActive(true);
+        }
     }
 
-    public void DisplayDemo(string currentWeather)
+    public void DisplayDemo(string currentWeather, bool sliderValue)
     {
+        isNight= sliderValue;
+        UstawNocDzien(isNight);
+
         if (currentWeather == "Clouds")//|| currentWeather == "Snow"
         {
             SpawnCloudy();
         }
-        else if (currentWeather == "Clear")
+        else if (currentWeather == "Clear" && isNight==false)
         {
             SpawnSunny();
         }
@@ -87,15 +107,14 @@ public class ShowWeather : MonoBehaviour
             SpawnSnowy();
 
         }
+        else if (currentWeather == "Rain")
+        {
+            SpawnRainy();
+        }
         else
         {
             None();
         }
-
-        noc_niebo_Object.SetActive(false);
-        dzien_niebo_Object.SetActive(true); //demo jest tylko w ci¹gu dnia
-        isNight = false;
-        night.enabled = false;
     }
 
 
@@ -117,17 +136,19 @@ public class ShowWeather : MonoBehaviour
         {
             StartCoroutine(DisableSnowy());
         }
+        else if (rainy)
+        {
+            StartCoroutine(DisableRainy());
+        }
     }
 
 
     void SpawnCloudy()
     {
         cloudy = true;
-        cloudyObject.SetActive(true);
-        FindObjectOfType<CloudGen>().StartGeneratingClouds();
         if (sunny)
         {
-            StartCoroutine(DisableSunny());
+            StartCoroutine(DisableSunny()); //s³oñce zachodzi
         }
         else if (foggy)
         {
@@ -137,10 +158,12 @@ public class ShowWeather : MonoBehaviour
         {
             StartCoroutine(DisableSnowy());
         }
-        else if (foggy) // wy³¹czam mg³ê
+        else if (rainy)
         {
-            StartCoroutine(DisableFoggy());
+            StartCoroutine(DisableRainy());
         }
+        cloudyObject.SetActive(true);
+        FindObjectOfType<CloudGen>().StartGeneratingClouds();
     }
 
 
@@ -151,29 +174,35 @@ public class ShowWeather : MonoBehaviour
         FindObjectOfType<FogGen>().StartGeneratingFog();
         if (sunny)
         {
-            StartCoroutine(DisableSunny());
+            sunnyObject.SetActive(false); //s³oñce nie odchodzi, tylko znika
+            //StartCoroutine(DisableSunny());
         }
-        if (cloudy) //wy³¹czam chmury
+        else if (cloudy)
         {
             StartCoroutine(DisableCloudy());
+        }
+        else if (snowy)
+        {
+            StartCoroutine(DisableSnowy());
+        }
+        else if (rainy)
+        {
+            StartCoroutine(DisableRainy());
         }
     }
     void SpawnSnowy()
     {
         snowy = true;
-        snow_grass_Object.SetActive(true);
-        krzaczek_Object.SetActive(false);
-        tree_Object.SetActive(false);
-        snow_krzaczek_Object.SetActive(true);
-        snow_tree_Object.SetActive(true);
-        snowyObject.SetActive(true);
-        chmurki_Object.SetActive(true);
+        ObiektyZielone.SetActive(false);
+        ObiektySniegowe.SetActive(true);
+        SnowClouds_Object.SetActive(true);
         FindObjectOfType<SnowGen>().StartGeneratingSnowflakes();
         if (sunny)
         {
-            StartCoroutine(DisableSunny());
+            sunnyObject.SetActive(false);
+            //StartCoroutine(DisableSunny());
         }
-        else if (foggy) //wy³¹czam mg³ê
+        else if (foggy)
         {
             StartCoroutine(DisableFoggy());
         }
@@ -181,6 +210,37 @@ public class ShowWeather : MonoBehaviour
         {
             StartCoroutine(DisableCloudy());
         }
+        else if (rainy)
+        {
+            StartCoroutine(DisableRainy());
+        }
+    }
+    void SpawnRainy()
+    {
+        rainy = true;
+        if (sunny)
+        {
+            sunnyObject.SetActive(false);
+            //StartCoroutine(DisableSunny());
+        }
+        else if (foggy)
+        {
+            StartCoroutine(DisableFoggy());
+        }
+        else if (cloudy)
+        {
+            StartCoroutine(DisableCloudy());
+        }
+        else if (snowy)
+        {
+            StartCoroutine(DisableSnowy());
+        }
+        if (isNight == false)
+        {
+            lightness.intensity = 1f;
+        }
+        ObiektyDeszcz.SetActive(true);
+        FindObjectOfType<RainGen>().StartGeneratingRaindrops();
     }
     void None()
     {
@@ -200,13 +260,17 @@ public class ShowWeather : MonoBehaviour
         {
             StartCoroutine(DisableSnowy());
         }
+        else if (rainy)
+        {
+            StartCoroutine(DisableRainy());
+        }
 
     }
 
     IEnumerator DisableCloudy()
     {
         cloudy = false;
-        FindObjectOfType<CloudGen>().StopGeneratingClouds(); //Najpierw trzeba zatrzymaæ generowanie chmur
+        FindObjectOfType<CloudGen>().StopGeneratingClouds();
         GameObject cloudsParent = GameObject.Find("Clouds");
 
         if (cloudsParent != null)
@@ -216,7 +280,7 @@ public class ShowWeather : MonoBehaviour
                 Destroy(cloud.gameObject);
             }
         }
-        cloudyObject.SetActive(false); //Potem dopiero mo¿na je odaktywniæ
+        cloudyObject.SetActive(false);
         yield return new WaitForSeconds(0);
 
     }
@@ -224,7 +288,7 @@ public class ShowWeather : MonoBehaviour
     {
         foggy = false;
         FindObjectOfType<FogGen>().StopGeneratingFog();
-        GameObject fogcloudsParent = GameObject.Find("FogClouds"); //Tu by³a z³a nazwa Fog zamiast FogClouds, dlatego nie chwyta³o :)
+        GameObject fogcloudsParent = GameObject.Find("FogClouds");
 
         if (fogcloudsParent != null)
         {
@@ -233,20 +297,14 @@ public class ShowWeather : MonoBehaviour
                 Destroy(fog.gameObject);
             }
         }
-        foggyObject.SetActive(false); //Potem dopiero mo¿na je odaktywniæ
+        foggyObject.SetActive(false);
         yield return new WaitForSeconds(0);
     }
 
     IEnumerator DisableSnowy()
     {
         snowy = false;
-        snow_krzaczek_Object.SetActive(false);
-        snow_tree_Object.SetActive(false);
-        krzaczek_Object.SetActive(true);
-        tree_Object.SetActive(true);
-        chmurki_Object.SetActive(false);
-        snow_grass_Object.SetActive(false); //usuniêcie snowgrass za ka¿dym razem gdy usuwamy œnieg
-        FindObjectOfType<SnowGen>().StopGeneratingSnowflakes(); //Najpierw trzeba zatrzymaæ generowanie chmur
+        FindObjectOfType<SnowGen>().StopGeneratingSnowflakes();
         GameObject snowflakesParent = GameObject.Find("Snowflakes");
 
         if (snowflakesParent != null)
@@ -256,7 +314,27 @@ public class ShowWeather : MonoBehaviour
                 Destroy(snow.gameObject);
             }
         }
-        snowyObject.SetActive(false); //Potem dopiero mo¿na je odaktywniæ
+        ObiektySniegowe.SetActive(false);
+        ObiektyZielone.SetActive(true);
+        SnowClouds_Object.SetActive(false);
+        yield return new WaitForSeconds(0);
+
+    }
+    IEnumerator DisableRainy()
+    {
+        rainy = false;
+
+        FindObjectOfType<RainGen>().StopGeneratingRaindrops();
+        GameObject raindropsParent = GameObject.Find("RainDrops");
+
+        if (raindropsParent != null)
+        {
+            foreach (Transform rain in raindropsParent.transform)
+            {
+                Destroy(rain.gameObject);
+            }
+        }
+        ObiektyDeszcz.SetActive(false);
         yield return new WaitForSeconds(0);
 
     }
@@ -286,8 +364,6 @@ public class ShowWeather : MonoBehaviour
     }
 
    
-    
-
     IEnumerator DayNight(WeatherData weatherData)
     {
         WeatherInfo weatherInfo = FindObjectOfType<WeatherInfo>();
@@ -306,13 +382,20 @@ public class ShowWeather : MonoBehaviour
         System.DateTime sunriseTimeOrg = sunriseTimeUTC.AddHours(h);
         System.DateTime sunsetTimeOrg = sunsetTimeUTC.AddHours(h);
 
-        //print(night.enabled.ToString());
         isNight = (newTime > sunsetTimeOrg || newTime < sunriseTimeOrg);
+        UstawNocDzien(isNight);
+
+        yield return new WaitForSeconds(0);
+
+    }
+
+    void UstawNocDzien(bool isNight)
+    {
         if (isNight)
         {
-            night.enabled = true;
             noc_niebo_Object.SetActive(true);
             dzien_niebo_Object.SetActive(false);
+            lightness.intensity = 0.3f;
             if (sunny)
             {
                 sunnyObject.SetActive(false);
@@ -320,12 +403,10 @@ public class ShowWeather : MonoBehaviour
         }
         else
         {
-            night.enabled = false;
             noc_niebo_Object.SetActive(false);
             dzien_niebo_Object.SetActive(true);
+            lightness.intensity = 3f;
         }
-
-        yield return new WaitForSeconds(5f);
-
+        
     }
 }
