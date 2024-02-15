@@ -15,12 +15,14 @@ public class ShowWeather : MonoBehaviour
     private bool foggy;
     private bool snowy;
     private bool rainy;
+    private bool stormy;
     private bool isNight;
     public GameObject cloudyObject;
     public GameObject sunnyObject;
     public GameObject foggyObject;
     public GameObject snowyObject;
     public GameObject rainyObject;
+    public GameObject stormyObject;
     private Vector3 startPoint = new Vector3(0f, 3.5f, 0f); // Punkt docelowy przy aktywacji s³oñca
     private Vector3 endPoint = new Vector3(2.5f, 6.5f, 0f); // Punkt docelowy przy dezaktywacji s³oñca
     private float arcHeight = 0.1f;
@@ -32,6 +34,7 @@ public class ShowWeather : MonoBehaviour
     public GameObject ObiektyDeszcz;
     public GameObject ObiektySniegowe;
     public GameObject ObiektyZielone;
+    public GameObject ObiektyBurza;
     public GameObject SnowClouds_Object;
 
     void Awake()
@@ -65,6 +68,10 @@ public class ShowWeather : MonoBehaviour
         else if (currentWeather == "Rain")
         {
             SpawnRainy();
+        }
+        else if (currentWeather == "Thunderstorm")
+        {
+            SpawnStormy();
         }
         else
         {
@@ -111,6 +118,10 @@ public class ShowWeather : MonoBehaviour
         {
             SpawnRainy();
         }
+        else if (currentWeather == "Thunderstorm")
+        {
+            SpawnStormy();
+        }
         else
         {
             None();
@@ -140,6 +151,10 @@ public class ShowWeather : MonoBehaviour
         {
             StartCoroutine(DisableRainy());
         }
+        else if (stormy)
+        {
+            StartCoroutine(DisableStormy());
+        }
     }
 
 
@@ -161,6 +176,10 @@ public class ShowWeather : MonoBehaviour
         else if (rainy)
         {
             StartCoroutine(DisableRainy());
+        }
+        else if (stormy)
+        {
+            StartCoroutine(DisableStormy());
         }
         cloudyObject.SetActive(true);
         FindObjectOfType<CloudGen>().StartGeneratingClouds();
@@ -189,6 +208,10 @@ public class ShowWeather : MonoBehaviour
         {
             StartCoroutine(DisableRainy());
         }
+        else if (stormy)
+        {
+            StartCoroutine(DisableStormy());
+        }
     }
     void SpawnSnowy()
     {
@@ -214,6 +237,10 @@ public class ShowWeather : MonoBehaviour
         {
             StartCoroutine(DisableRainy());
         }
+        else if (stormy)
+        {
+            StartCoroutine(DisableStormy());
+        }
     }
     void SpawnRainy()
     {
@@ -235,12 +262,47 @@ public class ShowWeather : MonoBehaviour
         {
             StartCoroutine(DisableSnowy());
         }
+        else if (stormy)
+        {
+            StartCoroutine(DisableStormy());
+        }
         if (isNight == false)
         {
             lightness.intensity = 1f;
         }
         ObiektyDeszcz.SetActive(true);
         FindObjectOfType<RainGen>().StartGeneratingRaindrops();
+    }
+    void SpawnStormy()
+    {
+        stormy = true;
+        if (sunny)
+        {
+            sunnyObject.SetActive(false);
+            //StartCoroutine(DisableSunny());
+        }
+        else if (foggy)
+        {
+            StartCoroutine(DisableFoggy());
+        }
+        else if (cloudy)
+        {
+            StartCoroutine(DisableCloudy());
+        }
+        else if (snowy)
+        {
+            StartCoroutine(DisableSnowy());
+        }
+        else if (rainy)
+        {
+            StartCoroutine(DisableRainy());
+        }
+        if (isNight == false)
+        {
+            lightness.intensity = 1f;
+        }
+        ObiektyBurza.SetActive(true);
+        FindObjectOfType<StormGen>().StartGeneratingThunders();
     }
     void None()
     {
@@ -264,7 +326,10 @@ public class ShowWeather : MonoBehaviour
         {
             StartCoroutine(DisableRainy());
         }
-
+        else if (stormy)
+        {
+            StartCoroutine(DisableStormy());
+        }
     }
 
     IEnumerator DisableCloudy()
@@ -338,7 +403,24 @@ public class ShowWeather : MonoBehaviour
         yield return new WaitForSeconds(0);
 
     }
-    IEnumerator MoveObjectAlongArcCoroutine(Vector3 start, Vector3 end)
+    IEnumerator DisableStormy()
+    {
+        stormy = false;
+
+        FindObjectOfType<StormGen>().StopGeneratingThunders();
+        GameObject thundersParent = GameObject.Find("Thunders");
+
+        if (thundersParent != null)
+        {
+            foreach (Transform thunder in thundersParent.transform)
+            {
+                Destroy(thunder.gameObject);
+            }
+        }
+        ObiektyBurza.SetActive(false);
+        yield return new WaitForSeconds(0);
+    }
+        IEnumerator MoveObjectAlongArcCoroutine(Vector3 start, Vector3 end)
     {
         float elapsedTime = 0f;
         while (elapsedTime < duration)
