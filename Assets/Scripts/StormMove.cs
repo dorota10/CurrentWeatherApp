@@ -1,31 +1,24 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using static WeatherInfo;
-
 
 public class StormMove : MonoBehaviour
 {
-    private float endPosX;
-    private float speed = 8;
+    private float destroyDelay = 2f; // OpóŸnienie przed zniszczeniem piorunu
 
-    public void StartFloating(float newspeed, float newendPosX)
+    void Start()
     {
-        speed = newspeed;
-        endPosX = newendPosX;
+        // Zniszcz piorun po pewnym czasie (destroyDelay)
+        StartCoroutine(DestroyAfterDelay());
     }
 
-    void Update()
+    private void Update()
     {
-        float movement = speed * Time.deltaTime;
-        transform.Translate(new Vector3(movement, 0f, 0f));
-
-        if (transform.position.x > endPosX)
-        {
-            Destroy(gameObject);
-        }
+        Sounds.StormSounds();
+    }
+    IEnumerator DestroyAfterDelay()
+    {
+        yield return new WaitForSeconds(destroyDelay);
+        Destroy(gameObject);
     }
 
-    //Sounds.StormSounds();//dzwiek burzy
 }
-

@@ -3,20 +3,13 @@ using UnityEngine;
 
 public class StormGen : MonoBehaviour
 {
-    [SerializeField]
-    public GameObject[] thunders;
-
-    [SerializeField]
-    public GameObject endPoint;
-
+    [SerializeField] public GameObject[] thunders;
+    [SerializeField] public GameObject endPoint;
     Vector3 startPos;
 
     private bool generateThunder = false;
-
     public Transform thunderParent;
-
     private Coroutine thunderGenerationCoroutine;
-
 
     void Start()
     {
@@ -47,20 +40,31 @@ public class StormGen : MonoBehaviour
 
     IEnumerator GenerateThundersCoroutine()
     {
-        // Generuj tylko dwa pioruny
-        for (int i = 0; i < 2; i++)
+        while (generateThunder)
         {
-            float randomX = Random.Range(startPos.x + 1f, startPos.x + 14f);
-            Vector3 spawnPos = new Vector3(randomX, startPos.y, startPos.z);
+            // Losuj pozycjê generowania pioruna
+            float randomX = Random.Range(startPos.x, endPoint.transform.position.x);
+            float randomY = Random.Range(startPos.y, endPoint.transform.position.y);
+            Vector3 spawnPos = new Vector3(randomX, randomY, startPos.z);
+
+            // Losuj prefab pioruna
+            GameObject thunderPrefab = thunders[Random.Range(0, thunders.Length)];
 
             // Twórz piorun w wylosowanej pozycji
-            GameObject thunderPrefab = thunders[0]; // Wybierz pierwszy obiekt z tablicy thunders
             GameObject thunder = Instantiate(thunderPrefab, spawnPos, Quaternion.identity, thunderParent);
 
+            // Dezaktywuj piorun po 1 sekundzie
+            yield return new WaitForSeconds(1f);
+            thunder.SetActive(false);
 
+            // Poczekaj a¿ piorun zostanie dezaktywowany
+            yield return new WaitUntil(() => !thunder.activeSelf);
 
-            // Poczekaj chwilê przed wygenerowaniem kolejnego pioruna
-            yield return new WaitForSeconds(Random.Range(1f, 2f));
+            // Zniszcz piorun
+            Destroy(thunder);
+
+            // Poczekaj 3 sekundy przed wygenerowaniem kolejnego pioruna
+            yield return new WaitForSeconds(2f);
         }
     }
 }
