@@ -25,7 +25,6 @@ public class DrizzleMove : MonoBehaviour
             Destroy(gameObject);
         }
 
-
         Sounds.DrizzleSounds();
     }
 }

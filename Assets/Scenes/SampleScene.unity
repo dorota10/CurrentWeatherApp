@@ -1116,8 +1116,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 1585199409
-  m_SortingLayer: 2
+  m_SortingLayerID: 1505531481
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300026, guid: f6a737996a4a842e58ba28428e71d711, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1448,7 +1448,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &233352867
 Transform:
   m_ObjectHideFlags: 0
@@ -1458,7 +1458,7 @@ Transform:
   m_GameObject: {fileID: 233352866}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.0226, y: 5.5, z: -0.06219768}
+  m_LocalPosition: {x: 3.83, y: 5.48, z: -0.06219768}
   m_LocalScale: {x: 1.9152373, y: 0.5030674, z: 0.96464}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2112,7 +2112,7 @@ MonoBehaviour:
   ObiektySniegowe: {fileID: 407346744}
   ObiektyZielone: {fileID: 4503861}
   ObiektyBurza: {fileID: 182626257}
-  "ObiektyM\u017Cawka": {fileID: 2069075582}
+  ObiektyMzawka: {fileID: 2069075582}
   SnowClouds_Object: {fileID: 58923530}
 --- !u!4 &319558895
 Transform:
@@ -5147,7 +5147,7 @@ MonoBehaviour:
   ObiektySniegowe: {fileID: 407346744}
   ObiektyZielone: {fileID: 4503861}
   ObiektyBurza: {fileID: 182626257}
-  "ObiektyM\u017Cawka": {fileID: 2069075582}
+  ObiektyMzawka: {fileID: 2069075582}
   SnowClouds_Object: {fileID: 58923530}
 --- !u!1 &1048706745
 GameObject:
@@ -5492,8 +5492,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 1505531481
-  m_SortingLayer: 3
+  m_SortingLayerID: -1401177821
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300066, guid: f6a737996a4a842e58ba28428e71d711, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -6191,8 +6191,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -513849323
-  m_SortingLayer: 1
+  m_SortingLayerID: 1585199409
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300026, guid: f6a737996a4a842e58ba28428e71d711, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -8381,8 +8381,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 1585199409
-  m_SortingLayer: 2
+  m_SortingLayerID: 1505531481
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300026, guid: f6a737996a4a842e58ba28428e71d711, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -8974,7 +8974,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2069075583
 Transform:
   m_ObjectHideFlags: 0

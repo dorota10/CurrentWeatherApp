@@ -67,4 +67,5 @@ public class StormGen : MonoBehaviour
             yield return new WaitForSeconds(2f);
         }
     }
+
 }
