@@ -82,7 +82,9 @@ public class WeatherInfo : MonoBehaviour
     private WeatherData currentWeatherData;
 
     IEnumerator FetchWeatherData(string url)
+
     {
+
         using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
         {
             yield return webRequest.SendWebRequest();
@@ -90,10 +92,12 @@ public class WeatherInfo : MonoBehaviour
             if (webRequest.result != UnityWebRequest.Result.Success)
             {
                 Debug.LogError("Error: " + webRequest.error + ". Check the city name.");
+                UnityEditor.EditorUtility.DisplayDialog("Error", "City not found. Please enter a valid city name.", "OK");
             }
             else
             {
                 currentWeatherData = JsonUtility.FromJson<WeatherData>(webRequest.downloadHandler.text);
+
 
                 double temperature = currentWeatherData.main.temp;
                 double windSpeed = currentWeatherData.wind.speed;
