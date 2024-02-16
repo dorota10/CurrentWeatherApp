@@ -54,14 +54,14 @@ public class StormGen : MonoBehaviour
             GameObject thunder = Instantiate(thunderPrefab, spawnPos, Quaternion.identity, thunderParent);
 
             // Dezaktywuj piorun po 1 sekundzie
-            yield return new WaitForSeconds(1f);
-            thunder.SetActive(false);
+            yield return new WaitForSeconds(2f);
+            Destroy(thunder);
+           // thunder.SetActive(false);
 
             // Poczekaj a¿ piorun zostanie dezaktywowany
-            yield return new WaitUntil(() => !thunder.activeSelf);
+            //yield return new WaitUntil(() => !thunder.activeSelf);
 
             // Zniszcz piorun
-            Destroy(thunder);
 
             // Poczekaj 3 sekundy przed wygenerowaniem kolejnego pioruna
             yield return new WaitForSeconds(2f);

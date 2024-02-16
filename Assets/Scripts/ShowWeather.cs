@@ -37,7 +37,7 @@ public class ShowWeather : MonoBehaviour
     public GameObject ObiektySniegowe;
     public GameObject ObiektyZielone;
     public GameObject ObiektyBurza;
-    public GameObject ObiektyMzawka;
+    public GameObject ObiektyM¿awka;
     public GameObject SnowClouds_Object;
 
     void Awake()
@@ -336,7 +336,7 @@ public class ShowWeather : MonoBehaviour
         {
             lightness.intensity = 0.7f;
         }
-        ObiektyMzawka.SetActive(true);
+        ObiektyM¿awka.SetActive(true);
         FindObjectOfType<DrizzleGen>().StartGeneratingSmallRaindrops();
     }
     void SpawnStormy()
@@ -474,6 +474,7 @@ public class ShowWeather : MonoBehaviour
             }
         }
         ObiektyDeszcz.SetActive(false);
+        FindObjectOfType<Sounds>().Stop();
         yield return new WaitForSeconds(0);
 
     }
@@ -491,8 +492,10 @@ public class ShowWeather : MonoBehaviour
                 Destroy(drizzle.gameObject);
             }
         }
-        ObiektyMzawka.SetActive(false);
-        yield return new WaitForSeconds(1);
+        ObiektyM¿awka.SetActive(false);
+        FindObjectOfType<Sounds>().Stop();
+        yield return new WaitForSeconds(0);
+
 
     }
     IEnumerator DisableStormy()
@@ -510,6 +513,7 @@ public class ShowWeather : MonoBehaviour
             }
         }
         ObiektyBurza.SetActive(false);
+        FindObjectOfType<Sounds>().Stop();
         yield return new WaitForSeconds(0);
     }
         IEnumerator MoveObjectAlongArcCoroutine(Vector3 start, Vector3 end)

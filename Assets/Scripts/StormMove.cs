@@ -27,4 +27,5 @@ public class StormMove : MonoBehaviour
         isDestroyed = true;
         Destroy(gameObject);
     }
+
 }
