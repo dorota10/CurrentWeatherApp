@@ -5,15 +5,16 @@ public class Sounds : MonoBehaviour
 {
     public static AudioClip rainsound;
     public static AudioClip stormsound;
+    public static AudioClip drizzlesound;
     static AudioSource audio_source;
 
-    // Start is called before the first frame update
-    private void Start()
+    // Awake is called when the script instance is being loaded
+    private void Awake()
     {
+        audio_source = GetComponent<AudioSource>();
         rainsound = Resources.Load<AudioClip>("rain_medium");
         stormsound = Resources.Load<AudioClip>("Thunder");
-
-        audio_source = GetComponent<AudioSource>();
+        drizzlesound = Resources.Load<AudioClip>("rain_light");
     }
 
     // Odtwarzaj dŸwiêk deszczu
@@ -26,5 +27,11 @@ public class Sounds : MonoBehaviour
     public static void StormSounds()
     {
         audio_source.PlayOneShot(stormsound);
+    }
+
+    // Odtwarzaj dŸwiêk m¿awki
+    public static void DrizzleSounds()
+    {
+        audio_source.PlayOneShot(drizzlesound);
     }
 }
