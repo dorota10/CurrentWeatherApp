@@ -34,4 +34,10 @@ public class Sounds : MonoBehaviour
     {
         audio_source.PlayOneShot(drizzlesound);
     }
+
+    // Wy³¹cz dŸwiêk przy dezaktywacji obiektu
+    private void OnDisable()
+    {
+        audio_source.Stop();
+    }
 }

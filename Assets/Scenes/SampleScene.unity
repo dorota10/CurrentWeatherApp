@@ -2112,7 +2112,7 @@ MonoBehaviour:
   ObiektySniegowe: {fileID: 407346744}
   ObiektyZielone: {fileID: 4503861}
   ObiektyBurza: {fileID: 182626257}
-  "ObiektyM\u017Cawka": {fileID: 2069075582}
+  ObiektyMzawka: {fileID: 2069075582}
   SnowClouds_Object: {fileID: 58923530}
 --- !u!4 &319558895
 Transform:
@@ -5147,7 +5147,7 @@ MonoBehaviour:
   ObiektySniegowe: {fileID: 407346744}
   ObiektyZielone: {fileID: 4503861}
   ObiektyBurza: {fileID: 182626257}
-  "ObiektyM\u017Cawka": {fileID: 2069075582}
+  ObiektyMzawka: {fileID: 2069075582}
   SnowClouds_Object: {fileID: 58923530}
 --- !u!1 &1048706745
 GameObject:
