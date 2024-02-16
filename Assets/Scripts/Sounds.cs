@@ -20,12 +20,13 @@ public class Sounds : MonoBehaviour
     // Odtwarzaj dŸwiêk deszczu
     public static void RainSounds()
     {
-        audio_source.PlayOneShot(rainsound);
+        audio_source.PlayOneShot(rainsound);   
     }
 
     // Odtwarzaj dŸwiêk burzy
     public static void StormSounds()
     {
+
         audio_source.PlayOneShot(stormsound);
     }
 
@@ -33,5 +34,10 @@ public class Sounds : MonoBehaviour
     public static void DrizzleSounds()
     {
         audio_source.PlayOneShot(drizzlesound);
+    }
+
+    public void Stop()
+    {
+        audio_source.Stop();
     }
 }

@@ -474,6 +474,7 @@ public class ShowWeather : MonoBehaviour
             }
         }
         ObiektyDeszcz.SetActive(false);
+        FindObjectOfType<Sounds>().Stop();
         yield return new WaitForSeconds(0);
 
     }
@@ -492,7 +493,9 @@ public class ShowWeather : MonoBehaviour
             }
         }
         ObiektyM¿awka.SetActive(false);
+        FindObjectOfType<Sounds>().Stop();
         yield return new WaitForSeconds(0);
+
 
     }
     IEnumerator DisableStormy()
@@ -510,6 +513,7 @@ public class ShowWeather : MonoBehaviour
             }
         }
         ObiektyBurza.SetActive(false);
+        FindObjectOfType<Sounds>().Stop();
         yield return new WaitForSeconds(0);
     }
         IEnumerator MoveObjectAlongArcCoroutine(Vector3 start, Vector3 end)
