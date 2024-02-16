@@ -1,25 +1,37 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Sounds : MonoBehaviour
 {
-
-
     public static AudioClip rainsound;
+    public static AudioClip stormsound;
+    public static AudioClip drizzlesound;
     static AudioSource audio_source;
 
-    // Start is called before the first frame update
-    private void Start()
+    // Awake is called when the script instance is being loaded
+    private void Awake()
     {
-        rainsound = Resources.Load<AudioClip>("rain_medium");
-
         audio_source = GetComponent<AudioSource>();
+        rainsound = Resources.Load<AudioClip>("rain_medium");
+        stormsound = Resources.Load<AudioClip>("Thunder");
+        drizzlesound = Resources.Load<AudioClip>("rain_light");
     }
 
-    // Update is called once per frame
+    // Odtwarzaj dŸwiêk deszczu
     public static void RainSounds()
     {
         audio_source.PlayOneShot(rainsound);
+    }
+
+    // Odtwarzaj dŸwiêk burzy
+    public static void StormSounds()
+    {
+        audio_source.PlayOneShot(stormsound);
+    }
+
+    // Odtwarzaj dŸwiêk m¿awki
+    public static void DrizzleSounds()
+    {
+        audio_source.PlayOneShot(drizzlesound);
     }
 }
