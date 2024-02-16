@@ -806,7 +806,6 @@ Transform:
   - {fileID: 1920231101}
   - {fileID: 443804174}
   - {fileID: 1880823560}
-  - {fileID: 1532951537}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &101204194
@@ -1161,7 +1160,6 @@ Transform:
   m_Children:
   - {fileID: 1769936265}
   - {fileID: 17544249}
-  - {fileID: 614810122}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &216971287
@@ -2112,7 +2110,7 @@ MonoBehaviour:
   ObiektySniegowe: {fileID: 407346744}
   ObiektyZielone: {fileID: 4503861}
   ObiektyBurza: {fileID: 182626257}
-  ObiektyMzawka: {fileID: 2069075582}
+  "ObiektyM\u017Cawka": {fileID: 1013147046}
   SnowClouds_Object: {fileID: 58923530}
 --- !u!4 &319558895
 Transform:
@@ -2923,12 +2921,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 614810121}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 6.0839887, y: 0.8080155, z: 4.381758}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 182626258}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &614810123
 AudioSource:
@@ -4790,12 +4788,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1013147046}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.14074388, y: -0.41400683, z: 0.06219768}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2069075583}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &1013147048
 AudioSource:
@@ -5147,7 +5145,7 @@ MonoBehaviour:
   ObiektySniegowe: {fileID: 407346744}
   ObiektyZielone: {fileID: 4503861}
   ObiektyBurza: {fileID: 182626257}
-  ObiektyMzawka: {fileID: 2069075582}
+  "ObiektyM\u017Cawka": {fileID: 2069075582}
   SnowClouds_Object: {fileID: 58923530}
 --- !u!1 &1048706745
 GameObject:
@@ -7206,11 +7204,11 @@ Transform:
   m_GameObject: {fileID: 1532951534}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -673.4668, y: -298.39493, z: 1.4898988}
+  m_LocalPosition: {x: 5.990967, y: 0.4449768, z: 0.05538881}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 95683513}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1539893549
 GameObject:
@@ -8984,12 +8982,11 @@ Transform:
   m_GameObject: {fileID: 2069075582}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.14074388, y: -0.41400683, z: 0.06219768}
+  m_LocalPosition: {x: -0.15, y: -0.41400683, z: 0.06219768}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 233352867}
-  - {fileID: 1013147047}
   - {fileID: 1396268114}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -9225,3 +9222,6 @@ SceneRoots:
   - {fileID: 95683513}
   - {fileID: 182626258}
   - {fileID: 2069075583}
+  - {fileID: 614810122}
+  - {fileID: 1532951537}
+  - {fileID: 1013147047}
