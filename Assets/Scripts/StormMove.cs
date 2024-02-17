@@ -5,7 +5,7 @@ public class StormMove : MonoBehaviour
 {
     private float destroyDelay = 2f; // OpóŸnienie przed zniszczeniem piorunu
 
-    private bool isDestroyed = false;
+    //private bool isDestroyed = false;
 
     void Start()
     {
@@ -15,16 +15,16 @@ public class StormMove : MonoBehaviour
 
     private void Update()
     {
-        if (!isDestroyed)
-        {
+        //if(isDestroyed)
+        //{
             Sounds.StormSounds();
-        }
+        //}
     }
 
     IEnumerator DestroyAfterDelay()
     {
         yield return new WaitForSeconds(destroyDelay);
-        isDestroyed = true;
+        //isDestroyed = true;
         Destroy(gameObject);
     }
 

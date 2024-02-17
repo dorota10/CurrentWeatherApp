@@ -119,7 +119,6 @@ public class ShowWeather : MonoBehaviour
         else if (currentWeather == "Snow")
         {
             SpawnSnowy();
-
         }
         else if (currentWeather == "Rain")
         {
@@ -372,6 +371,7 @@ public class ShowWeather : MonoBehaviour
         {
             lightness.intensity = 1f;
         }
+        noc_niebo_Object.SetActive(false);
         ObiektyBurza.SetActive(true);
         FindObjectOfType<StormGen>().StartGeneratingThunders();
     }
