@@ -5,6 +5,7 @@ using System.Net;
 using System.IO;
 using UnityEngine.Networking;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class WeatherInfo : MonoBehaviour
 {
@@ -91,8 +92,9 @@ public class WeatherInfo : MonoBehaviour
 
             if (webRequest.result != UnityWebRequest.Result.Success)
             {
-                Debug.LogError("Error: " + webRequest.error + ". Check the city name.");
-                UnityEditor.EditorUtility.DisplayDialog("Error", "City not found. Please enter a valid city name.", "OK");
+                //Debug.LogError("Error: " + webRequest.error + ". Check the city name.");
+                //UnityEditor.EditorUtility.DisplayDialog("Error", "City not found. Please enter a valid city name.", "OK");
+                //SceneManager.LoadScene("SampleScene");
             }
             else
             {
