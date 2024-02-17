@@ -5,6 +5,7 @@ using System.Net;
 using System.IO;
 using UnityEngine.Networking;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class WeatherInfo : MonoBehaviour
 {
@@ -82,18 +83,23 @@ public class WeatherInfo : MonoBehaviour
     private WeatherData currentWeatherData;
 
     IEnumerator FetchWeatherData(string url)
+
     {
+
         using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
         {
             yield return webRequest.SendWebRequest();
 
             if (webRequest.result != UnityWebRequest.Result.Success)
             {
-                Debug.LogError("Error: " + webRequest.error + ". Check the city name.");
+                //Debug.LogError("Error: " + webRequest.error + ". Check the city name.");
+                //UnityEditor.EditorUtility.DisplayDialog("Error", "City not found. Please enter a valid city name.", "OK");
+                //SceneManager.LoadScene("SampleScene");
             }
             else
             {
                 currentWeatherData = JsonUtility.FromJson<WeatherData>(webRequest.downloadHandler.text);
+
 
                 double temperature = currentWeatherData.main.temp;
                 double windSpeed = currentWeatherData.wind.speed;

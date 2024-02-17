@@ -35,6 +35,7 @@ public class ShowWeather : MonoBehaviour
     public GameObject dzien_niebo_Object;
     public GameObject ObiektyDeszcz;
     public GameObject ObiektySniegowe;
+    public GameObject ObiektyZima;
     public GameObject ObiektyZielone;
     public GameObject ObiektyBurza;
     public GameObject ObiektyM¿awka;
@@ -58,10 +59,9 @@ public class ShowWeather : MonoBehaviour
         {
             SpawnSunny();
         }
-        else if (currentWeather == "Fog")
+        else if (currentWeather == "Fog" || currentWeather == "Mist" || currentWeather == "Dust")
         {
             SpawnFoggy();
-
         }
         else if (currentWeather == "Snow")
         {
@@ -72,7 +72,7 @@ public class ShowWeather : MonoBehaviour
         {
             SpawnRainy();
         }
-        else if (currentWeather == "Thunderstorm")
+        else if (currentWeather == "Thunderstorm" || currentWeather == "Squall" || currentWeather == "Tornado")
         {
             SpawnStormy();
         }
@@ -89,12 +89,12 @@ public class ShowWeather : MonoBehaviour
 
         if (temp < 273.15)
         {
-            ObiektySniegowe.SetActive(true);
+            ObiektyZima.SetActive(true);
             ObiektyZielone.SetActive(false);
         }
         else
         {
-            ObiektySniegowe.SetActive(false);
+            ObiektyZima.SetActive(false);
             ObiektyZielone.SetActive(true);
         }
     }
@@ -119,7 +119,6 @@ public class ShowWeather : MonoBehaviour
         else if (currentWeather == "Snow")
         {
             SpawnSnowy();
-
         }
         else if (currentWeather == "Rain")
         {
@@ -173,7 +172,7 @@ public class ShowWeather : MonoBehaviour
     }
 
 
-    void SpawnCloudy()
+    public void SpawnCloudy()
     {
         cloudy = true;
         if (sunny)
@@ -241,6 +240,7 @@ public class ShowWeather : MonoBehaviour
         snowy = true;
         ObiektyZielone.SetActive(false);
         ObiektySniegowe.SetActive(true);
+        ObiektyZima.SetActive(true);
         SnowClouds_Object.SetActive(true);
         FindObjectOfType<SnowGen>().StartGeneratingSnowflakes();
         if (sunny)
@@ -339,7 +339,7 @@ public class ShowWeather : MonoBehaviour
         ObiektyM¿awka.SetActive(true);
         FindObjectOfType<DrizzleGen>().StartGeneratingSmallRaindrops();
     }
-    void SpawnStormy()
+    public void SpawnStormy()
     {
         stormy = true;
         if (sunny)
@@ -371,6 +371,7 @@ public class ShowWeather : MonoBehaviour
         {
             lightness.intensity = 1f;
         }
+        noc_niebo_Object.SetActive(false);
         ObiektyBurza.SetActive(true);
         FindObjectOfType<StormGen>().StartGeneratingThunders();
     }
@@ -454,6 +455,7 @@ public class ShowWeather : MonoBehaviour
             }
         }
         ObiektySniegowe.SetActive(false);
+        ObiektyZima.SetActive(false);
         ObiektyZielone.SetActive(true);
         SnowClouds_Object.SetActive(false);
         yield return new WaitForSeconds(0);
