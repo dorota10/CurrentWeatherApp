@@ -58,10 +58,9 @@ public class ShowWeather : MonoBehaviour
         {
             SpawnSunny();
         }
-        else if (currentWeather == "Fog")
+        else if (currentWeather == "Fog" || currentWeather == "Mist" || currentWeather == "Dust")
         {
             SpawnFoggy();
-
         }
         else if (currentWeather == "Snow")
         {
@@ -72,7 +71,7 @@ public class ShowWeather : MonoBehaviour
         {
             SpawnRainy();
         }
-        else if (currentWeather == "Thunderstorm")
+        else if (currentWeather == "Thunderstorm" || currentWeather == "Squall" || currentWeather == "Tornado")
         {
             SpawnStormy();
         }
@@ -173,7 +172,7 @@ public class ShowWeather : MonoBehaviour
     }
 
 
-    void SpawnCloudy()
+    public void SpawnCloudy()
     {
         cloudy = true;
         if (sunny)
@@ -339,7 +338,7 @@ public class ShowWeather : MonoBehaviour
         ObiektyM¿awka.SetActive(true);
         FindObjectOfType<DrizzleGen>().StartGeneratingSmallRaindrops();
     }
-    void SpawnStormy()
+    public void SpawnStormy()
     {
         stormy = true;
         if (sunny)
